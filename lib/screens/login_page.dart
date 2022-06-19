@@ -1,8 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name = "";
+  bool changeButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,7 @@ class LoginPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             Text(
-              "Welcome",
+              "Welcome $name",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -31,9 +40,12 @@ class LoginPage extends StatelessWidget {
                       hintText: "Enter User Name",
                       labelText: "User Name",
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
+                    onChanged: (value) {
+                      name = value;
+                      setState(() {});
+                    },
+                    maxLength:
+                        15, // sirf 15 words he use honge user ke name ke liye
                   ),
                   TextFormField(
                     obscureText: true,
@@ -45,15 +57,44 @@ class LoginPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
+                  InkWell(
+                    onTap: () async {
+                      setState(() {
+                        changeButton=true;
+                      });
+                      await Future.delayed(Duration(seconds: 1));
                       Navigator.of(context).pushNamed("/home");
                     },
-                    child: Text("Login"),
-                    style: TextButton.styleFrom(
-                      minimumSize: Size(150, 50),
+                    child: AnimatedContainer(
+                      duration: Duration(seconds: 1),
+                      width: changeButton ? 50 : 150,
+                      height: 50,
+                      alignment: Alignment.center,
+                      child: changeButton
+                          ? Icon(Icons.done, color: Colors.white)
+                          : Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius:
+                            BorderRadius.circular(changeButton ? 50 : 8),
+                      ),
                     ),
-                  )
+                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).pushNamed("/home");
+                  //   },
+                  //   child: Text("Login"),
+                  //   style: TextButton.styleFrom(
+                  //     minimumSize: Size(150, 50),
+                  //   ),
+                  // )
                 ],
               ),
             ),
