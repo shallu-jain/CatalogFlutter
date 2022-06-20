@@ -12,6 +12,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
+  final _formKey = GlobalKey<FormState>();
+
+  moveToHome(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        changeButton = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      await Navigator.pushNamed(context, "/home");
+      setState(() {
+        changeButton = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,69 +46,75 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 35.0),
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 50),
               child: Column(
                 children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Enter User Name",
-                      labelText: "User Name",
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          // key: _formKey,
+                          decoration: InputDecoration(
+                            hintText: "Enter User Name",
+                            labelText: "User Name",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Username cannot be empty";
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            name = value;
+                            setState(() {});
+                          },
+                        ),
+                        TextFormField(
+                          // key: _formKey,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "Enter Password",
+                            labelText: "Password",
+                          ),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Password cannot be empty";
+                            } else if (value.length < 6) {
+                              return "Password length should be atleast 6";
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
                     ),
-                    onChanged: (value) {
-                      name = value;
-                      setState(() {});
-                    },
-                    maxLength:
-                        15, // sirf 15 words he use honge user ke name ke liye
                   ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Enter Password",
-                      labelText: "Password",
-                    ),
-                  ),
+
                   SizedBox(
                     height: 20,
                   ),
-                  InkWell(
-                    onTap: () async {
-                      setState(() {
-                        changeButton=true;
-                      });
-                      await Future.delayed(Duration(seconds: 1));
-                      Navigator.of(context).pushNamed("/home");
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(seconds: 1),
-                      width: changeButton ? 50 : 150,
-                      height: 50,
-                      alignment: Alignment.center,
-                      child: changeButton
-                          ? Icon(Icons.done, color: Colors.white)
-                          : Text(
-                              "Login",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius:
-                            BorderRadius.circular(changeButton ? 50 : 8),
+                  Material(
+                    color: Colors.deepPurpleAccent,
+                    borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
+                    child: InkWell(
+                      onTap: () => moveToHome(context),
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 1),
+                        width: changeButton ? 50 : 150,
+                        height: 50,
+                        alignment: Alignment.center,
+                        child: changeButton
+                            ? Icon(Icons.done, color: Colors.white)
+                            : Text(
+                                "Login",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
                       ),
                     ),
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     Navigator.of(context).pushNamed("/home");
-                  //   },
-                  //   child: Text("Login"),
-                  //   style: TextButton.styleFrom(
-                  //     minimumSize: Size(150, 50),
-                  //   ),
-                  // )
                 ],
               ),
             ),
