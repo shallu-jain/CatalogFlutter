@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_catalog/models/catalog.dart';
+import 'package:flutter_catalog/screens/home_detail_page.dart';
 import 'package:flutter_catalog/widgets/themes.dart';
 import 'dart:convert';
 
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           // padding: EdgeInsets.all(32),          ////////////////////////////
           // padding: EdgeInsets.only(right: 32.0, left: 32.0),
-          margin: EdgeInsets.only(left: 32,right: 32),
+          margin: EdgeInsets.only(left: 32, right: 32),
           //////////////////////////////
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,8 +136,10 @@ class _HomePageState extends State<HomePage> {
               if (CatalogModel.items.isNotEmpty)
                 Expanded(child: CatalogList())
               else
-                Center(
-                  child: CircularProgressIndicator(),
+                Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 )
             ],
           ),
@@ -154,7 +157,17 @@ class CatalogList extends StatelessWidget {
       itemCount: CatalogModel.items.length,
       itemBuilder: (context, index) {
         final catalog = CatalogModel.items[index];
-        return CatalogItem(catalog: catalog);
+        return InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeDetailPage(
+                catalog: catalog,
+              ),
+            ),
+          ),
+          child: CatalogItem(catalog: catalog),
+        );
       },
     );
   }
@@ -167,17 +180,18 @@ class CatalogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       color: Colors.white,
       // color: Colors.red,
       height: 150.0,
       width: 150.0,
-      margin: EdgeInsets.only(top: 15.0,bottom: 15.0),
+      margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
 
       child: Row(
         children: [
-          CatalogImage(image: catalog.image),
+          Hero(
+              tag: Key(catalog.id.toString()),
+              child: CatalogImage(image: catalog.image)),
           Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +234,7 @@ class CatalogItem extends StatelessWidget {
                         shape: MaterialStateProperty.all(StadiumBorder())),
                   ),
                 ],
-              )
+              ),
             ],
           ))
         ],
