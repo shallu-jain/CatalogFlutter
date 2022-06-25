@@ -123,6 +123,13 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: MyTheme.creamColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, "/cart");
+        },
+        child: Icon(CupertinoIcons.cart),
+        backgroundColor: MyTheme.darkBluishColor,
+      ),
       body: SafeArea(
         child: Container(
           // padding: EdgeInsets.all(32),          ////////////////////////////
