@@ -11,7 +11,9 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: MyTheme.creamColor,
       // backgroundColor: Colors.black,
       bottomNavigationBar: Padding(
@@ -30,12 +32,12 @@ class HomeDetailPage extends StatelessWidget {
             ),
             SizedBox(
               height: 50.0,
-              width: 150.0,
+              width: 100.0,
               child: ElevatedButton(
                 onPressed: () {},
                 child: Text(
-                  "Buy",
-                  style: TextStyle(fontSize: 25.0),
+                  "Add To Cart",
+                  style: TextStyle(fontSize: 10.0),
                 ),
                 style: ButtonStyle(
                   backgroundColor:
@@ -92,6 +94,16 @@ class HomeDetailPage extends StatelessWidget {
                       ),
                       SizedBox(
                         height: 10.0,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          "Apple iPhones have revolutionized the mobile industry and are the best phones in the market because of their easy to use interface, "
+                          "plethora of high quality applications ranging from games, educational, social applications and many more categories. Also, "
+                          "iPhones are well known for their advanced 8 megapixel camera that captures 1080p high quality photos and videos; "
+                          ,
+
+                        ),
                       ),
                     ],
                   ),
