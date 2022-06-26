@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_catalog/models/catalog.dart';
+import 'package:flutter_catalog/widgets/add_To_Cart.dart';
 import 'package:flutter_catalog/widgets/themes.dart';
 
 class HomeDetailPage extends StatelessWidget {
@@ -33,20 +34,22 @@ class HomeDetailPage extends StatelessWidget {
             SizedBox(
               height: 50.0,
               width: 100.0,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Add To Cart",
-                  style: TextStyle(fontSize: 10.0),
-                ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(MyTheme.darkBluishColor),
-                  shape: MaterialStateProperty.all(
-                    StadiumBorder(),
-                  ),
-                ),
-              ),
+              child:
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   child: Text(
+              //     "Add To Cart",
+              //     style: TextStyle(fontSize: 10.0),
+              //   ),
+              //   style: ButtonStyle(
+              //     backgroundColor:
+              //         MaterialStateProperty.all(MyTheme.darkBluishColor),
+              //     shape: MaterialStateProperty.all(
+              //       StadiumBorder(),
+              //     ),
+              //   ),
+              // ),
+              AddToCart(catalog: catalog),
             ),
           ],
         ),

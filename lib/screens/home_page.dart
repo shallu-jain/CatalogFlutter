@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_catalog/models/cart.dart';
 import 'package:flutter_catalog/models/catalog.dart';
 import 'package:flutter_catalog/screens/home_detail_page.dart';
+import 'package:flutter_catalog/widgets/add_To_Cart.dart';
 import 'package:flutter_catalog/widgets/themes.dart';
 import 'dart:convert';
 
@@ -122,11 +124,10 @@ class _HomePageState extends State<HomePage> {
     // );
 
     return Scaffold(
-      backgroundColor: MyTheme.creamColor,
+      // backgroundColor: MyTheme.creamColor,
+      backgroundColor: Theme.of(context).canvasColor,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "/cart");
-        },
+        onPressed: () => Navigator.pushNamed(context, "/cart"),
         child: Icon(CupertinoIcons.cart),
         backgroundColor: MyTheme.darkBluishColor,
       ),
@@ -232,14 +233,7 @@ class CatalogItem extends StatelessWidget {
                       fontSize: 15.0,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Buy"),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(MyTheme.darkBluishColor),
-                        shape: MaterialStateProperty.all(StadiumBorder())),
-                  ),
+                  AddToCart(catalog: catalog),
                 ],
               ),
             ],
@@ -249,6 +243,8 @@ class CatalogItem extends StatelessWidget {
     );
   }
 }
+
+
 
 class CatalogImage extends StatelessWidget {
   final String image;
